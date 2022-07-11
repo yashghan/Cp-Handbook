@@ -1,0 +1,344 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+
+bool comp(pair<int,int> &x, pair<int, int> &y){
+    return x.second > y.second;
+}
+
+bool comp2(pair<int,int> &x, pair<int, int> &y){
+    return (x.first <= y.first && x.second > y.second);
+}
+
+int main(){
+    fastio();
+
+#ifndef ONLINE_JUDGE
+  freopen("Error.txt", "w", stderr);
+#endif
+
+#ifndef ONLINE_JUDGE
+  freopen("input.txt", "r", stdin);
+  freopen("output.txt", "w", stdout);
+#endif
+    // vectors
+
+    // vector<int> v;
+    // v/push_back(5);
+    // v.push_back(6);
+    // v.push_back(3);
+    // cout << v.size() << "\n";
+
+    // v.pop_back();
+    // cout << v.size() << "\n";
+
+    // v.push_back(2);
+    // cout << v.size() << "\n";
+
+    // v.clear();
+    // cout << v.size() << "\n";
+
+    // vector<int> v(50); // {0,0,......}
+    // vector<int> v(50, 7); // {7,7,......}
+
+    // vector<int> v[50]; //This is an array of 50 vectors
+
+    // sorting algorithm
+    // TC - O(nlogn)
+
+//    int a[n]          vector<int> v;               string s;         
+//    sort(a, a+n)      sort(v.begin(), v.end())     sort(s.begin(), s.end())
+
+//==================================================================================
+    // Pair
+
+    // pair<int, int> p1;
+    // pair<int, string> p2;
+    // pair<int, pair<int,string>> p3;
+    // pair<vector<int>, string> p4;
+    // Access elements using .first and .second
+    // pair<string, int> p5 = {"hello", 6};
+    // cout << p5.first << " " << p5.second; // printd: hello 6
+
+    // pair<int,int> f(){
+    //     return {3,4};
+    // }
+    // To return pair of integers above function can be used
+
+// =================================================================================================================
+
+
+    // Sorting arrays/ vectors of Pairs
+
+    // An array of pairs
+    // pair<int,int> p[5];
+    // p[0] = {1,2};
+    // p[1] = {5,2};
+    // p[3] = {8,1};
+    // p[4] = {3,4};
+
+    // sorting this array
+    // sort(p, p+5);
+    // Comparison is done on the basis of first but if there is a tie then comparison is done on the basis of second
+
+    // for(int i = 0; i < 5; i++){
+    //     cout << p[i].first << " " << p[i].second << endl; 
+    // }
+
+    // Given a list of names and scores of students, print the names of students in decreasing order of scores
+
+    // vector<pair<int,string>> v; //{score, names}
+    // v.push_back({5, "Yash"});
+    // v.push_back({4, "Yavb"});
+    // v.push_back({7, "Rak"});
+    // v.push_back({2, "Ajay"});
+
+    //
+    //
+    // sort(v.begin(), v.end());
+    // reverse(v.begin() , v.end());
+    
+    // =============================================================================================================================================
+
+
+    // Iterators                                                                                 //Pointers
+    // vector<int> v = {10,15,12,5,20};                                                             //int a[5] = {10,15,12,5,20};           
+    // vector<int>::iterator it = v.begin();                                                        //int *p = a;
+    // OR                                                                                        //cout << *p; //10
+    // auto it = v.begin(); // auto keyword is used to deduce datatype automatically                //p++;
+    // cout << *it; //10                                                                            //cout << *p; //15    
+    // it++;                                                                                        //p--
+    // cout << *it; //15                                                                            //cout << *p; // 10
+    // it--;                                                                                        //cout << *(p+3); // 5
+    // cout << *it; //10
+    // cout << *(it+3); //5
+
+    // ======================================================================================================================================================
+
+    // Set
+    // set<int> s;
+    // set<string> s;
+    // Important functions:
+    // s.insert(x); //O(logn)
+    // s.erase(x);  //O(logn)
+    // s.count(x);  //O(logn)
+    // s.clear();   //O(n)
+    // s.size();    //O(1);
+    // s.insert(10);
+    // s.insert(15);
+    // cout << s.count(10) << "\n";
+    // cout << s.count(9) << "\n";
+    // cout << s.count(11) << "\n";
+    // cout << s.count(15) << "\n";
+
+    // Set offers less features than vector iterators
+    // auto it = s.begin() //it is the iterattor to the first 
+    // s.end() is the iterator to a non-existent element (after the last element)
+    // it++, it--, ++it, --it -> These are all valid and work in logN time
+    // NOTE: (it + 5) or it+= 2 et are INVALID. To advance multiple steps, do it++ multiple time.
+    
+    // Functions related to set iterators:
+    // s.find(x): returns iterator to element with value x. Returns s.end() if not found. 0(logN)
+    // s.lower_bound(x): returns iterator to first element which is >= x. Returns s.end() if not found. //O(logN)
+    // s.upper_bound(x): returns iterator to first element which is > x. Returns s.end() if not found. //O(logN)
+    // s.find(it): erases the element with iterator it. O(logN)
+
+    // Both of the next 2 lines are exactly the same
+    // if(s.find(10) == s.end()) cout << "Not Found";
+    // if(s.count(10) == 0) cout << "Not Found";
+
+//=================================================================================================================================
+    // map
+    // map<string, int> m;
+    // m["hello"] = 50;
+    // m["world"] = 12;
+// ---------------------------------------------------------
+// Question:
+// https://codeforces.com/problemset/problem/4/C
+// Solution:
+
+    // abacaba - 1
+    // acaba - 1
+    // abacaba already exists -> abacaba1 -1
+    // acab - 1
+
+    // long long n;
+    // cin >> n;
+    // map<string, int> mp;
+    // while(n--){
+    //     string s;
+    //     cin >> s;
+    //     if(mp[s] == 0){
+    //         mp[s]++;
+    //         cout << "OK" << "\n";
+    //     }
+    //     else{
+    //         cout << s + to_string(mp[s]) << "\n";
+    //         mp[s]++;
+    //     }
+    // }
+// --------------------------------------------------------------------
+
+    // map<int, int> m;
+    // m[-234] = 49; //negative ints are also valis as keys
+
+    // In maps also the keys are unique and sorted. In case of strings they will be in lexicographically sorted order
+
+    // m.clear() - Clears a map
+    // m[key] - value of element with key. O(logN)
+
+    // Map operations: (similar to set)
+    // m.find(key),
+    // m.erase(key),
+    // m.lower_bound(key),
+    // m.upper_bound(key)
+
+    // NOTE:
+    // Map iterators behave similar to set iterators, but upon doing *it you instead of getting the value, you get a pair of {key, value}
+
+    // Examples:
+    // map<string, double> m;
+    //insert values in map
+
+    // auto it = m.find("yash");
+    // pair<string, double> p = *it; //{"yash", m["yash"]}
+
+    // (*it).first and (*it).second -> to access the first and second elements of the *it
+    // Another way for (*it).first and (*it).second is it->first and it->second
+
+    // Examplse
+    // map<int,int> m;
+    // cout << m.size() << "\n";
+    // cout << m[15] << "\n"; //instantly create the element and the value will be 0
+    // m[10] = 4;
+    // m[26];
+
+    // cout << m[10] << "\n";
+    // cout << m.size() << "\n";
+
+    //=====================================================================================================
+
+    // Iterating the containers 
+    
+    // for(auto it = s.begin(); it != s.end(); it++){
+        //*it
+    // }
+    // This works for set, map and vectors
+
+    // Short version:
+    // vector<int> v;
+    // for(int x; y){
+    //     //x
+    // }
+
+    // set<int> s;
+    // for(int x:s){
+    //     //x
+    // }
+
+    // map<int,int> m;
+    // for(pair<int,int> x:m){
+    //     // x.first, x.second;
+    // }
+
+    // set<int> s;
+    // int n;
+    // cin >> n;
+
+    // for(int i = 0; i < n; i++){
+    //     int x;
+    //     cin >> x;
+    //     s.insert(x);
+    // }
+    // s.erase(4);
+    // for(int x: s){
+    //     cout << x << " ";
+    // }
+
+    // Interseting Use case:
+    // ques: There is a shop. In the shop the shopkeeper sells an object with it's respective price
+    // object - price
+    // Miser customers do visit that shop wherein the only take the cheapest object present 
+    // at that moment in the shop.(Basically they do not care about the objects/ their requirements.
+    // they just take the cheapest object)
+    // How can you give the miser customer the cheapest object?
+    // Solution:
+
+    // n objects and q customers;
+    // int n,q;
+    // cin >> n >> q;
+    // set<pair<int, string>> ds;
+    // for(int i = 0; i < n; i++){
+    //     string object; cin >> object;
+    //     int price; cin >> price;
+    //     ds.insert({price, object});
+    // }
+    // while(q--){
+    //     auto it = ds.begin();
+    //     pair<int,string> p = *it;
+    //     cout << it -> second << "\n";
+    //     ds.erase(*it);
+    // }
+
+    // ====================================================================================================
+
+    // Custom Comparators
+    //  You can define your own rule of sorting!
+    // Note: Using custom comparators we can apply custom sorting rules to sets and maps also
+
+    // Example
+
+    // bool decreasing_order(int x, int y){
+        // return x > y;
+    // }
+
+    // int a[10];
+    // sort(a, a+10, decreasing_order); //sorts in descending order
+
+    //The comparator with arguments (x,y) should return true IF AND ONLY IF, x is necessarily on the left of y in the sorted array.
+     
+    
+// Exercise: Define Custom Comparator to sort pairs in increasing order of first and if there are ties, break those in decreasing order of second.
+
+    // int n; cin >> n;
+    // vector<pair<int, int>> v;
+    // for(int i = 0; i < n; i++){
+    //     int a, b;
+    //     cin >> a >> b;
+    //     v.push_back({a,b});
+    // }
+    
+    // reverse of sort(v.begin(), v.end()) -> sort(v.rbegin(), v.rend());
+    // for(auto x: v){
+    //     cout << "{" <<x.first <<","<< x.second << "}" << " ";
+    // }
+    // cout << endl;
+
+    // comparison is such that for (x1,y1) (x2,y2), y2 > y1 is the priority
+    // sort(v.begin(), v.end(), comp);
+    // for(auto x: v){
+    //     cout << "{" <<x.first <<","<< x.second << "}" << " ";
+    // }
+    // cout << endl;
+
+    // comparison is such that for (x1,y1) (x2,y2), x1 <= x2 and y1 > y2 
+    // sort(v.begin(), v.end(), comp2);
+    // for(auto x: v){
+    //     cout << "{" <<x.first <<","<< x.second << "}" << " ";
+    // }
+    // cout << endl;
+
+    // sort(v.begin(), v.end());
+    // for(auto x: v){
+    //     cout << "{" <<x.first <<","<< x.second << "}" << " ";
+    // }
+    // cout << endl;
+
+// ============================================================================================================
+
+
+
+}
+
