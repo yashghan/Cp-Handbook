@@ -1,0 +1,37 @@
+
+string findNum(string &p, string &s, ll n){
+
+    ll plen = p.length();
+    ll slen = s.length();
+    string ans = "";
+    for(ll i = 0; i < n; i++){
+        if(p.at(plen-i-1) >= s.at(slen-i-1)){
+            ans += char(p.at(plen-i-1) - s.at(slen-i-1) + '0');
+        }
+        else{
+            ans += char(10 + p.at(plen-i-1) - s.at(slen-i-1) + '0');
+            p[plen-i-2] = char(p.at(plen-i-2) - '1' + '0');
+        }
+    }
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+
+void solve(){
+    ll n; cin >> n;
+    string s; cin >> s;
+    string p = "";
+
+    if(s.at(0) == '9'){
+        for(int i = 0; i <= n; i++){
+            p = p + "1";
+        }
+    }
+    else{
+        for(int i = 0; i < n; i++){
+            p = p + "9";
+        }
+    }
+    cout << findNum(p,s,n) << "\n";
+
+}
