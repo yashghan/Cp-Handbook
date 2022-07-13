@@ -1,0 +1,102 @@
+#include <iostream>
+// #include<bits / stdc++.h> 
+using namespace std;
+
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+
+
+class AbstractEmployee {
+    virtual void AskForPromotion()=0;
+};
+
+class Employee:AbstractEmployee {
+
+private:
+    string Name;
+    string Company;
+    int Age;
+public:
+    // string Name;
+    // string Company;
+    // int Age;
+
+    void setName(string name){ //setter Name
+        Name = name;
+    }
+    string getName(){ //getter Name
+        return Name;
+    }
+    void setCompany(string company){ //setter company
+        Company = company;
+    }
+    string getCompany(){ //getter company
+        return Company;
+    }
+    void setAge(int age){ //setter age
+        if(age >= 18){
+            Age = age;
+        }
+    }
+    int getAge(){ //getter age
+        return Age;
+    }
+
+    void IntroduceYourself()  //method
+    {
+        cout << "Name: " << Name << "\n";
+        cout << "Company: " << Company << "\n";
+        cout << "Age: " << Age << "\n";
+    }
+
+    Employee(string name, string company, int age){ //custom created constructor
+        Name = name;
+        Company = company;
+        Age = age;
+    }
+
+    void AskForPromotion(){
+        if(Age > 30){
+            cout << "You have been promoted" << "\n";
+        }
+        else{
+            cout << "You have not been promoted" << "\n";
+        }
+    }
+
+};
+
+int main()
+{
+
+    fastio();
+
+#ifndef ONLINE_JUDGE
+    freopen("Error.txt", "w", stderr);
+#endif
+
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+
+    Employee employee1("Yash", "Google", 21);
+    // employee1.Name = "Yash";
+    // employee1.Company = "Google";
+    // employee1.Age = 21;
+
+    // employee1.IntroduceYourself();
+
+    Employee employee2("John", "Amazon", 35);
+    // employee2.Name = "John";
+    // employee2.Company = "Amazon";
+    // employee2.Age = 25;
+    // employee2.IntroduceYourself();
+
+    // employee1.setAge(17);
+    // cout << employee1.getName() << " is " << employee1.getAge() << " years old";
+
+    employee1.AskForPromotion();
+    employee2.AskForPromotion();
+    
+    return 0;
+}
