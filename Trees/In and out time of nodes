@@ -1,0 +1,21 @@
+Motivation to study this concept:
+
+To find if a particular node x is present in the subtree of node y.
+
+int timer = 1;
+bool dfs(int v){
+    vis[v] = 1;
+    In[v] = timer++;
+    for(int child: adj[v]){
+        if(vis[child] == 0){
+           dfs(child);
+        }
+    }
+    Out[v] = timer++;
+}
+
+
+Concept: (if the intime of node x is < than intime of node y) && (the outtime of node x > outtime of node y) then y is present in the subtree of node x)
+         (if the intime of node x is < than intime of node y) && (the outtime of node x < outtime of node y) then x and y are present in different subtrees
+         
+         
