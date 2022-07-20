@@ -1,0 +1,63 @@
+A bipartite graph is a special graph in which you can divide the vertex set of the graph in two disjoint sets such that:
+1] Each vertex belongs to one of the two sets
+2] Each edge connects vertices of two different sets
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int vis[1001];
+int col[1001];
+vector<int> adj[1001];
+
+bool dfs(int v, int c){
+    vis[v] = 1;
+    col[v] = c;
+    
+    for(int child: adj[v]){
+        if(vis[child] == 0){
+            if(dfs(child, c^1) == false){
+                return false;
+            }
+        }
+        else{
+            if(col[v] == col[child]){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
+int main(){
+
+  #ifndef ONLINE_JUDGE
+  freopen("Error.txt", "w", stderr);
+  #endif
+
+  #ifndef ONLINE_JUDGE
+  freopen("input.txt", "r", stdin);
+  freopen("output.txt", "w", stdout);
+  #endif
+
+    int n;
+    cin >> n;
+
+    int v1, v2;
+    for(int i = 0; i < n; i++){
+        cin >> v1 >> v2;
+        adj[v1].push_back(v2);
+        adj[v2].push_back(v1);
+    }
+    for(int i = 1; i <= n; i++){
+        if(!vis[i]){
+            if(dfs(i, 0) == false){
+                cout << "false" << "\n";
+                return 0;
+            }
+        }
+    }
+    cout << "true" << "\n";
+    
+    return 0;
+}
