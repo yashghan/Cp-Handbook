@@ -1,5 +1,11 @@
 void printSubsequences(int idx, int n, int s, int arr[], vector<int> ds, int sum){
-
+    
+    //Base conditions
+    
+    // condition is not saatisfied going forward
+    // But it can only be done if array contains all positives
+    if(s > sum) return 0;
+    
     if(idx == n){
         if(s == sum){
             for(auto it: ds){
