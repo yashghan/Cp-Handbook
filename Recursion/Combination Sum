@@ -1,0 +1,36 @@
+https://leetcode.com/problems/combination-sum/
+
+TC: 2^target * k where k is the avg length that needs to be pushed into the 2d vector ans
+SC: O(k*x) where k is the avg length and x are the number of combinations
+
+class Solution {
+public:
+    
+    void findCombinationSum(int idx, int n, vector<int> &ds, vector<vector<int>> &ans, int target, vector<int> &candidates){
+    
+        if(idx == n){
+            if(target == 0){
+                ans.push_back(ds);
+            }
+            return;
+        }
+    
+        //pick up the element
+        if(target >= candidates[idx]){
+            ds.push_back(candidates[idx]);
+            findCombinationSum(idx, n, ds, ans, target - candidates[idx], candidates);
+            ds.pop_back();
+        }
+        //not pick the element
+        findCombinationSum(idx + 1, n, ds, ans, target, candidates);
+    
+    }
+    
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> ans;
+        vector<int> ds;
+        int n = candidates.size();
+        findCombinationSum(0, n, ds, ans, target, candidates);
+        return ans;
+    }
+};
