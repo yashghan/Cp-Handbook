@@ -1,0 +1,37 @@
+https://leetcode.com/problems/combination-sum-ii/
+
+TC: O(2^n * k)
+SC: O(k*x) -> ignoring the auxilary space
+
+class Solution {
+public:
+    
+    void findCombinationSum(int idx, int n, vector<int> &ds, vector<vector<int>> &ans, int target, vector<int> &candidates){
+    
+
+        if(target == 0){
+            ans.push_back(ds);
+            return;
+        }
+        
+        for(int i = idx; i < n; i++){
+            if(i > idx && candidates[i] == candidates[i-1]) continue;
+            
+            if(target < candidates[i]) break;
+            
+            ds.push_back(candidates[i]);
+            findCombinationSum(i+1, n, ds, ans, target - candidates[i], candidates);
+            ds.pop_back();
+            
+        }
+    }
+    
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int>> ans;
+        vector<int> ds;
+        int n = candidates.size();
+        findCombinationSum(0, n, ds, ans, target, candidates);
+        return ans;
+    }
+};
