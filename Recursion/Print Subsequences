@@ -1,0 +1,48 @@
+
+void printSubsequences(int idx, int n, int arr[], vector<int> &ds){
+
+    if(idx >= n){
+        for(auto it: ds){
+            cout << it;
+        }
+        if(ds.size() == 0){
+            cout << "{}";
+        }
+        cout << "\n";
+        return;
+    }
+
+    //pick
+    ds.push_back(arr[idx]);
+    printSubsequences(idx + 1, n, arr, ds);
+    // Backtracking
+    ds.pop_back();
+
+    //not pick
+    printSubsequences(idx + 1, n, arr, ds);
+
+}
+
+int main()
+{
+
+  fastio();
+
+  #ifndef ONLINE_JUDGE
+  freopen("Error.txt", "w", stderr);
+  #endif
+
+  #ifndef ONLINE_JUDGE
+  freopen("input.txt", "r", stdin);
+  freopen("output.txt", "w", stdout);
+  #endif
+
+  int arr[] = {3,2,1};
+  int n = 3;
+  vector<int> ds;
+  printSubsequences(0, n, arr, ds);
+    
+
+  return 0;
+
+}
