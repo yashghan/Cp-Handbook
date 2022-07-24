@@ -1,0 +1,46 @@
+
+int printSubsequences(int idx, int n, int s, int arr[], int sum){
+
+    if(idx == n){
+        // condition satisfied
+        if(s == sum){
+            return 1;
+        }
+        // condition not satisfied
+        else return 0;
+    }
+
+    //pick
+    s += arr[idx];
+    int Pick = printSubsequences(idx + 1, n, s, arr, sum);    
+    s -= arr[idx];
+    
+    //not pick
+    int NotPick = printSubsequences(idx + 1, n, s, arr, sum);
+
+    return Pick + NotPick;
+}
+
+int main()
+{
+
+  fastio();
+
+  #ifndef ONLINE_JUDGE
+  freopen("Error.txt", "w", stderr);
+  #endif
+
+  #ifndef ONLINE_JUDGE
+  freopen("input.txt", "r", stdin);
+  freopen("output.txt", "w", stdout);
+  #endif
+
+  int arr[] = {1,2,1};
+  int sum = 2;
+  int n = 3;
+ 
+  cout << printSubsequences(0, n, 0, arr, sum) << "\n";
+    
+  return 0;
+
+}
