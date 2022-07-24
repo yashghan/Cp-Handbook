@@ -46,3 +46,51 @@ int main()
   return 0;
 
 }
+
+For String:
+
+
+
+void printSubsequences(int idx, int n, string input, string output){
+
+    if(idx == n){
+        cout << output << "\n";
+        return;
+    }
+    if(idx == 0){
+        cout << "{}" << "\n";
+    }
+    //pick
+    output.push_back(input[idx]);
+    printSubsequences(idx + 1, n, input, output);
+    // Backtracking
+    output.pop_back();
+
+    //not pick
+    printSubsequences(idx + 1, n, input, output);
+
+}
+
+int main()
+{
+
+  fastio();
+
+  #ifndef ONLINE_JUDGE
+  freopen("Error.txt", "w", stderr);
+  #endif
+
+  #ifndef ONLINE_JUDGE
+  freopen("input.txt", "r", stdin);
+  freopen("output.txt", "w", stdout);
+  #endif
+
+//   int arr[] = {3,2,1};
+  string input = "abc";
+  int n = 3;
+  string output = "";
+  printSubsequences(0, n, input, output);
+    
+  return 0;
+
+}
