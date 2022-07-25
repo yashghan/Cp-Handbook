@@ -1,7 +1,8 @@
 https://leetcode.com/problems/permutations/
 
+Approach: 1
 TC: O(n! * n)
-SC: O(n) + O(n) -> map + ds
+SC: O(n) + O(n) + O(n) -> map + ds + auxilary space
 
 class Solution {
 public:
@@ -31,6 +32,38 @@ public:
             freq[i] = 0;
         }
         recurPermute(ds, nums, ans, freq);
+        return ans;
+    }
+};
+
+//================================================================================================================================================
+
+Approach - 2
+
+TC: O(n!*n)
+SC: O(n) -> auxilary space
+
+class Solution {
+public:
+    
+    void recurPermute(int idx, vector<int> &nums, vector<vector<int>> &ans){
+        
+        if(idx == nums.size()){
+            ans.push_back(nums);
+            return;
+        }
+        
+        for(int i = idx; i < nums.size(); i++){
+            swap(nums[idx], nums[i]);
+            recurPermute(idx + 1, nums, ans);
+            swap(nums[idx], nums[i]);
+        }
+        
+    }
+    
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        recurPermute(0, nums, ans);
         return ans;
     }
 };
