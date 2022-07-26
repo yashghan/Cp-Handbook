@@ -1,0 +1,52 @@
+https://leetcode.com/problems/palindrome-partitioning/
+
+Time Complexity: O( (2^n) *k*(n/2) )
+
+Reason: O(2^n) to generate every substring and O(n/2)  to check if the substring generated is a palindrome. O(k) is for inserting the palindromes in another
+data structure, where k  is the average length of the palindrome list.
+
+Space Complexity: O(k * x)
+
+Reason: The space complexity can vary depending upon the length of the answer. k is the average length of the list of palindromes and if we have x such list
+of palindromes in our final answer. The depth of the recursion tree is n, so the auxiliary space required is equal to the O(n).
+
+class Solution {
+
+private:
+    bool isPalindrome(int start, int end, string s){
+        while(start <= end){
+            if(s[start] != s[end]){
+                return false;
+            }
+            else{
+                start++;
+                end--;
+            }
+        }
+        return true;
+    }
+    
+    void func(int idx, string s, vector<vector<string>> &res, vector<string> &path){
+        
+        if(idx == s.size()){
+            res.push_back(path);
+            return;
+        }
+        
+        for(int i = idx; i < s.size(); i++){
+            if(isPalindrome(idx, i, s)){
+                path.push_back(s.substr(idx, i - idx + 1));
+                func(i+1, s, res, path);
+                path.pop_back();
+            }
+        }
+    }
+    
+public:
+    vector<vector<string>> partition(string s) {
+        vector<vector<string>> res;
+        vector<string> path;
+        func(0, s, res, path);
+        return res;
+    }
+};
