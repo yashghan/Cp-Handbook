@@ -14,7 +14,7 @@ int f(int ind, vector<int> &heights, vector<int> &dp){
     
     int case2 = INT_MAX;
     if(ind > 1){
-        case2 = f(ind-2, heights, dp) + abs(heights[ind] -         heights[ind-2]);
+        case2 = f(ind-2, heights, dp) + abs(heights[ind] - heights[ind-2]);
     }
         
     return dp[ind] = min(case1, case2);
