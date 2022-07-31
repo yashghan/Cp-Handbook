@@ -81,3 +81,47 @@ int frogJump(int n, vector<int> &heights)
     
     return previ;
 }
+ ====================================================================================================================================
+
+// Modified Question:
+
+// If the frog can make k jumps instead of 1 and 2
+
+TC: O(n*k)
+SC: O(n) + O(n)
+
+int f(int ind, vector<int> &heights, vector<int> &dp){
+    
+  if(ind == 0) return 0;
+  
+  if(dp[ind] != -1) return dp[ind];
+  int ans = INT_MAX;
+
+  for(int i = 1; i <=k; i++){
+    if(ind >= i){
+      ans = min(ans, f(ind-i, heights, dp) + abs(heights[ind] - heights[ind-i]));
+    }
+  }    
+  return dp[ind] = ans;  
+}
+
+
+TC: O(n * k)
+SC: O(n)
+
+int frogJump(int n, vector<int> &heights)
+{
+    vector<int> dp(n, INT_MAX);
+    dp[0] = 0;
+    for(int i = 1; i < n; i++){
+      for(int j = 1; j <= k; j++){
+        if(i >= j){
+          ans = min(ans, dp[i-j] + abs(heights[i] - heights[i-j]));
+        }
+      }
+      dp[i] = ans;
+    }
+    return dp[n-1];
+}
+
+
