@@ -1,0 +1,50 @@
+//dfs
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int vis[10];
+vector<int> adj[10];
+
+//dfs
+void dfs(int v){
+    vis[v] = 1;
+    cout << v << "->";
+    for(int child: adj[v]){
+        if(vis[child] == 0){
+            dfs(child);
+        }
+    }
+}
+
+int main(){
+
+  #ifndef ONLINE_JUDGE
+  freopen("Error.txt", "w", stderr);
+  #endif
+
+  #ifndef ONLINE_JUDGE
+  freopen("input.txt", "r", stdin);
+  freopen("output.txt", "w", stdout);
+  #endif
+  
+    int n;
+    cin >> n;
+
+    int v1, v2;
+    
+    //Graph Representation
+    for(int i = 0; i < n; i++){
+        cin >> v1 >> v2;
+        adj[v1].push_back(v2);
+        adj[v2].push_back(v1);
+    }
+    
+    for(int i = 1; i <= n; i++){
+        if(!vis[i]){
+            dfs(i);
+        }
+    }
+    
+    return 0;
+}
