@@ -1,3 +1,5 @@
+https://www.codingninjas.com/codestudio/problems/minimum-spanning-tree_631769?topList=love-babbar-dsa-sheet-problems&leftPanelTab=0&utm_source=youtube&utm_medium=affiliate&utm_campaign=Lovebabbar
+
 #include <bits/stdc++.h>
 
 bool cmp(vector<int> &a, vector<int> &b){
