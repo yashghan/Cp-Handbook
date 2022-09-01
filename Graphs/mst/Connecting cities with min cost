@@ -1,0 +1,123 @@
+https://www.codingninjas.com/codestudio/problems/connecting-cities-with-minimum-cost_1386586?leftPanelTab=0
+
+/*
+    Time Complexity: O(M * log(M) + N + M)
+    Space Complexity: O(N + M)
+
+    where ‘N’ and ‘M’ denotes the number of nodes and edges in the graph, respectively.
+*/
+
+#include <algorithm>
+
+// Creates a new set consisting of the new element v.
+void makeSet(vector<int> &parent, vector<int> &rank, int n){
+    for(int i = 0; i <= n; i++){
+        rank[i] = 0;
+        parent[i] = i;
+    }
+}
+
+// Returns the parent of the set that contains the element v.
+int findParent(vector<int> &parent, int v)
+{
+    if (v == parent[v])
+    {
+        // Current element is the parent of its set.
+        return v;
+    }
+    else
+    {
+        // Using path compression technique.
+        return parent[v] = findParent(parent, parent[v]);
+    }
+}
+
+// Merges the two specified sets
+void unionSet(int a, int b, vector<int> &parent, vector<int> &rank)
+{
+    // Find the parent of both elements.
+    a = findParent(parent, a);
+    b = findParent(parent, b);
+
+    if (a != b)
+    {
+        if (rank[a] < rank[b])
+        {
+            swap(a, b);
+        }
+
+        parent[b] = a;
+        if (rank[a] == rank[b])
+        {
+            rank[a]++;
+        }
+    }
+}
+
+// Custom comparator to sort the edges.
+bool compare(vector<int> const &a, vector<int> const &b)
+{
+    return a[2] < b[2];
+}
+
+int getMinimumCost(int n, int m, vector<vector<int>> &connections)
+{
+
+    // Parent and rank arrays to be used in DSU.
+    vector<int> parent(n+1);
+    vector<int> rank(n+1);
+
+     // Create a new set for each node.
+     makeSet(parent, rank, n);
+   
+    // To store the weight of MST.
+    int minwt = 0;
+//     int edges = 0;
+    
+    // Sort the edges in ascending order by its weight.
+    sort(connections.begin(), connections.end(), compare);
+
+    // Start traversing through the edges.
+    for (int i = 0; i < connections.size(); i++)
+    {
+        
+        // Check if both vertices of current edge belong to different sets(subtrees).
+        int u = findParent(parent, connections[i][0]);
+        int v = findParent(parent, connections[i][1]);
+        int wt = connections[i][2];
+        
+        if(u != v){
+            minwt += wt;
+            //merge two subtrees
+            unionSet(u, v, parent, rank);
+//             edges++;
+        }
+ 
+    }
+// M-1
+    int parentOfAll = findParent(parent, 1);
+
+    for (int i = 2; i <= n; i++)
+    {
+        if (parentOfAll != findParent(parent, i))
+        {
+            return -1;
+        }
+    }
+    
+    
+// M-2
+//     return (edges == n-1) ? minwt : -1;
+    
+    
+// M-3
+//     unordered_set<int> vis;
+//     for(int i = 1; i <= n; i++){
+//         vis.insert(parent[i]);
+//     }
+//     if(vis.size() > 1){
+//         return -1;
+//     }
+    
+    return minwt;
+}
