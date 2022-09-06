@@ -1,0 +1,58 @@
+
+int main()
+{
+
+  fastio();
+
+  #ifndef ONLINE_JUDGE
+  freopen("Error.txt", "w", stderr);
+  #endif
+
+  #ifndef ONLINE_JUDGE
+  freopen("input.txt", "r", stdin);
+  freopen("output.txt", "w", stdout);
+  #endif
+
+  int n, m, source;
+  cin >> n >> m;
+  vector<pair<int, int>> g[n+1];
+
+  int u, v, wt;
+  for(int i = 0; i < m; i++){
+    cin >> u >> v >> wt;
+    g[u].push_back({v, wt});
+    g[v].push_back({u, wt});
+
+  }
+  cin >> source;
+
+  // min-heap -> min element at the top of the queue
+  // pair<int, int>  -> {dist, node}
+  priority_queue<pair<int, int>, vector<<pair<int, int>>, greater<pair<int, int>>> pq;
+  vector<int> distTo(n+1, INT_MAX);
+  distTo[source] = 0;
+  pq.push({0, source});
+
+  while(!pq.empty()){
+    int dist = pq.top().first;
+    int prev = pq.top().second;
+    pq.pop();
+    // it -> vector<pair<int, int>>
+    for(auto it: g[prev]){
+      int nextDist = it.first;
+      int next = it.second;
+      if(distTo[next] > distTo[prev] + nextDist){
+        distTo[next] = distTo[prev] + nextDist;
+        pq.push({distTo[next], next});
+      }
+    }
+  }
+
+  for(int i = 1; i <= n; i++){
+    cout << distTo[i] << " ";
+  }
+  cout << endl;
+
+  return 0;
+
+}
