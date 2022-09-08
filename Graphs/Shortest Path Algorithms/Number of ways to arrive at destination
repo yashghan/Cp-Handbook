@@ -1,0 +1,84 @@
+https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/
+
+class Solution {
+public:
+    int mod = 1e9 + 7;
+    int countPaths(int n, vector<vector<int>>& roads) {
+        vector<pair<long long, long long>> g[n];
+        for(auto road: roads){
+            g[road[0]].push_back({road[1], road[2]});
+            g[road[1]].push_back({road[0], road[2]});
+        }
+        
+        vector<long long> dist(n, INT_MAX);
+        vector<long long> ways(n, 0);
+        dist[0] = 0;
+        ways[0] = 1;
+        
+        priority_queue<pair<long long, long long>, vector<pair<long long, long long>>, greater<pair<long long, long long>>> pq;
+        pq.push({dist[0], 0});
+        
+        while(!pq.empty()){
+            long long prev_dist = pq.top().first;
+            long long prev_node = pq.top().second;
+            pq.pop();
+            
+            for(auto it: g[prev_node]){
+                long long cur_node = it.first;
+                long long cur_dist = it.second;
+                if(dist[prev_node] != INT_MAX && dist[cur_node] > dist[prev_node] + cur_dist){
+                    dist[cur_node] = dist[prev_node] + cur_dist;
+                    ways[cur_node] = ways[prev_node];
+                    pq.push({dist[cur_node], cur_node});
+                }
+                else if(dist[cur_node] == dist[prev_node] + cur_dist){
+                    
+                    ways[cur_node] = (ways[cur_node] + ways[prev_node]) % mod;
+                }
+            }
+        }
+        
+        return ways[n-1];
+        
+    }
+};
+// class Solution {
+// public:
+//     int mod = 1e9 + 7;
+//     int countPaths(int n, vector<vector<int>>& roads) {
+//         vector<pair<long long,long long>> adj[n];
+//         for(auto it: roads){
+//             adj[it[0]].push_back({it[1],it[2]});  // adj src des time
+//             adj[it[1]].push_back({it[0],it[2]});  // adj des src time cause its bidirectional
+//         }
+        
+//         vector<long long> dist(n,LONG_MAX);
+//         vector<long long> ways(n,0);
+//         dist[0]=0;
+//         ways[0]=1;
+//         priority_queue<pair<long long,long long>,vector<pair<long long,long long>>,greater<pair<long long,long long>>> qq;
+//         // it stores dist/time and src.
+//         qq.push({0,0});
+//         while(!qq.empty()){
+//             auto temp=qq.top();
+//             qq.pop();
+//             long long d=temp.first;
+//             long long n=temp.second;
+//             if(dist[n]<d) continue;
+//             for(auto it:adj[n]){
+//                 long long nn=it.first;
+//                 long long tt=it.second;
+//                 if(dist[nn]>d+tt){
+//                     dist[nn]=d+tt;
+//                     ways[nn]=ways[n];
+//                     qq.push({dist[nn],nn});
+//                 }
+//                 else if(dist[nn]==d+tt){
+//                     ways[nn]=(ways[nn]+ways[n])%mod;
+//                 }
+//             }
+//         }
+//         return ways[n-1];
+        
+//     }
+// };
