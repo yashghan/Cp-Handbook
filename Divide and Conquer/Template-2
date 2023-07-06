@@ -1,0 +1,35 @@
+class Solution {
+private:
+    vector<int> suf, pref;
+private:
+    int solve(int l, int r, vector<int> &nums){
+        if(l == r) return nums[l];
+        int mid = l + (r - l) / 2;
+        // int lCurSum = 0, rCurSum = 0, leftSum = 0, rightSum = 0;
+        // for(int i = mid - 1; i >= l; i--){
+        //     lCurSum += nums[i];
+        //     leftSum = max(leftSum, lCurSum);
+        // }
+        // for(int i = mid + 1; i <= r; i++){
+        //     rCurSum += nums[i];
+        //     rightSum = max(rightSum, rCurSum);
+        // }
+        
+        return max({solve(l, mid, nums), solve(mid + 1, r, nums), (pref[mid] + suf[mid+1])});
+
+    }
+
+public:
+    int maxSubArray(vector<int>& nums) {
+        pref = suf = nums;
+        int n = nums.size();
+        for(int i = 1; i < n; i++){
+            pref[i] += max(0, pref[i-1]);
+        }
+        for(int i = n-2; i >= 0; i--){
+            suf[i] += max(0, suf[i+1]);
+        }
+
+        return solve(0, n-1, nums);
+    }
+};
