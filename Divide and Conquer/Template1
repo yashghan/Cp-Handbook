@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<int>> getSkyline(const vector<vector<int>>& buildings) {
+        //Problem specific logic and base case
+        const int n = buildings.size();
+        if (n == 0)
+            return {};
+        if (n == 1) {
+            const int left = buildings[0][0];
+            const int right = buildings[0][1];
+            const int height = buildings[0][2];
+            vector<vector<int>> ans;
+            ans.push_back({left, height});
+            ans.push_back({right, 0});
+            return ans;
+        }
+
+        //structure 
+        vector<vector<int>> leftSkyline = getSkyline(vector<vector<int>>(buildings.begin(), buildings.begin() + n / 2));
+        vector<vector<int>> rightSkyline = getSkyline(vector<vector<int>>(buildings.begin() + n / 2, buildings.end()));
+        return merge(leftSkyline, rightSkyline);
+    }
+    
+private:
+    vector<vector<int>> merge(const vector<vector<int>>& left, const vector<vector<int>>& right) {
+        //Problem specific merge function
+        vector<vector<int>> ans;
+        int i = 0; // left's index
+        int j = 0; // right's index
+        int leftY = 0;
+        int rightY = 0;
+        while (i < left.size() && j < right.size()) {
+            // Choose the point with the smaller x-coordinate
+            if (left[i][0] < right[j][0]) {
+                leftY = left[i][1]; // Update the ongoing leftY
+                addPoint(ans, left[i][0], max(left[i][1], rightY));
+                i++;
+            } else {
+                rightY = right[j][1]; // Update the ongoing rightY
+                addPoint(ans, right[j][0], max(right[j][1], leftY));
+                j++;
+            }
+        }
+        while (i < left.size()){
+            addPoint(ans, left[i][0], left[i][1]);
+            i++;
+        }
+        while (j < right.size()){
+            addPoint(ans, right[j][0], right[j][1]);
+            j++;
+        }
+        return ans;
+    }
+
+   //Problem specific function used in merge
+    void addPoint(vector<vector<int>>& ans, int x, int y) {
+        if (!ans.empty() && ans.back()[0] == x) {
+            ans.back()[1] = y;
+            return;
+        }
+        if (!ans.empty() && ans.back()[1] == y)
+            return;
+        ans.push_back({x, y});
+    }
+};
